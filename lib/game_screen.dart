@@ -13,9 +13,40 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   var characters = "abcdefghijklmnñopqrstuvwxyz".toUpperCase();
-  var word = "baaba".toUpperCase();
   List<String> selectedChar = [];
+  List<String> wordList = ["palabra", "caja", "papel", "sapo"];
+  String currentWord = "";
+
   var tries = 0;
+
+  void onCharPressed(String char) {
+    setState(() {
+      selectedChar.add(char.toUpperCase());
+      if (!currentWord.split("").contains(char.toUpperCase())) {
+        tries++;
+      }
+    });
+
+    if (tries == 6) {
+      setState(() {
+        tries = 0;
+        selectedChar.clear();
+      });
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Alert("Perdiste", "Intenta de nuevo", () {
+              Navigator.of(context).pop();
+            });
+          });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    currentWord = wordList.first.toUpperCase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +82,7 @@ class _GameScreenState extends State<GameScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: word
+                          children: currentWord
                               .split("")
                               .map((e) => hiddenLetter(
                                   e, selectedChar.contains(e.toUpperCase())))
@@ -76,31 +107,7 @@ class _GameScreenState extends State<GameScreen> {
                                   backgroundColor: Colors.black54),
                               onPressed: selectedChar.contains(e.toUpperCase())
                                   ? null
-                                  : () {
-                                      setState(() {
-                                        selectedChar.add(e.toUpperCase());
-                                        if (!word
-                                            .split("")
-                                            .contains(e.toUpperCase())) {
-                                          tries++;
-                                        }
-                                      });
-
-                                      if (tries == 6) {
-                                        setState(() {
-                                          tries = 0;
-                                          selectedChar.clear();
-                                        });
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Alert("Perdiste",
-                                                  "Intenta de nuevo", () {
-                                                Navigator.of(context).pop();
-                                              });
-                                            });
-                                      }
-                                    },
+                                  : () => onCharPressed(e),
                               child: Text(
                                   style: const TextStyle(
                                       fontSize: 22,
