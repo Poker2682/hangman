@@ -90,6 +90,20 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
     currentWord = wordList.first.toUpperCase();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Alert(
+                "Hola mi amor :)",
+                "Necesitaba estudiar para la tesis, y tambien queria hacerte una "
+                    "carta que te sorprendiera al mismo tiempo, asi que programe este "
+                    "jueguito del ahorcado que deberas resolver para descubrir tu carta.\n\n"
+                    "Te amo! \u2665", () {
+              Navigator.of(context).pop();
+            });
+          });
+    });
   }
 
   @override
