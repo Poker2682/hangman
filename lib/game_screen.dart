@@ -3,6 +3,7 @@ import 'package:hangman/alert.dart';
 import 'package:hangman/consts/consts.dart';
 import 'package:hangman/game/figure_widget.dart';
 import 'package:hangman/game/hidden_letter.dart';
+import 'package:hangman/letter_screen.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -49,7 +50,7 @@ class _GameScreenState extends State<GameScreen> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return Alert("Conseguiste la palabra",
+              return Alert("Lo conseguiste",
                   "Te quedan $remainingWords palabras por encontrar", () {
                 Navigator.of(context).pop();
               });
@@ -57,6 +58,7 @@ class _GameScreenState extends State<GameScreen> {
 
         setState(() {
           selectedChar.clear();
+          tries = 0;
           currentWord = wordList[currentWordIndex + 1];
         });
       } else {
@@ -66,7 +68,8 @@ class _GameScreenState extends State<GameScreen> {
               return Alert(
                   "¡Felicidades!", "Has completado el juego, aqui va tu premio",
                   () {
-                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => const LetterScreen())));
               });
             });
         setState(() {
