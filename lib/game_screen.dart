@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:hangman/alert.dart';
 import 'package:hangman/consts/consts.dart';
 import 'package:hangman/game/figure_widget.dart';
 import 'package:hangman/game/hidden_letter.dart';
@@ -86,6 +85,21 @@ class _GameScreenState extends State<GameScreen> {
                                           tries++;
                                         }
                                       });
+
+                                      if (tries == 6) {
+                                        setState(() {
+                                          tries = 0;
+                                          selectedChar.clear();
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Alert("Perdiste",
+                                                  "Intenta de nuevo", () {
+                                                Navigator.of(context).pop();
+                                              });
+                                            });
+                                      }
                                     },
                               child: Text(
                                   style: const TextStyle(
