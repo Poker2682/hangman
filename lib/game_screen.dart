@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hangman/consts/consts.dart';
+import 'package:hangman/game/figure_widget.dart';
 import 'package:hangman/game/hidden_letter.dart';
 
 class GameScreen extends StatefulWidget {
@@ -14,6 +16,7 @@ class _GameScreenState extends State<GameScreen> {
   var characters = "abcdefghijklmnñopqrstuvwxyz".toUpperCase();
   var word = "baaba".toUpperCase();
   List<String> selectedChar = [];
+  var tries = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +35,15 @@ class _GameScreenState extends State<GameScreen> {
                 children: [
                   Expanded(
                       flex: 4,
-                      child: Container(
-                        color: Colors.amber,
-                      )),
+                      child: Stack(children: [
+                        figure(GameUI.hang, tries >= 0),
+                        figure(GameUI.head, tries >= 1),
+                        figure(GameUI.body, tries >= 2),
+                        figure(GameUI.leftArm, tries >= 3),
+                        figure(GameUI.rightArm, tries >= 4),
+                        figure(GameUI.leftLeg, tries >= 5),
+                        figure(GameUI.rightLeg, tries >= 6),
+                      ])),
                   Expanded(
                       child: Container(
                     padding: const EdgeInsets.all(8.0),
@@ -63,7 +72,18 @@ class _GameScreenState extends State<GameScreen> {
                       .map((e) => ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black54),
-                          onPressed: () {},
+                          onPressed: selectedChar.contains(e.toUpperCase())
+                              ? null
+                              : () {
+                                  setState(() {
+                                    selectedChar.add(e.toUpperCase());
+                                    if (!word
+                                        .split("")
+                                        .contains(e.toUpperCase())) {
+                                      tries++;
+                                    }
+                                  });
+                                },
                           child: Text(
                               style: const TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold),
