@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:hangman/consts/consts.dart';
+import 'package:hangman/game/hidden_letter.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -14,6 +12,8 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   var characters = "abcdefghijklmnñopqrstuvwxyz".toUpperCase();
+  var word = "baaba".toUpperCase();
+  List<String> selectedChar = [];
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,14 @@ class _GameScreenState extends State<GameScreen> {
                   Expanded(
                       child: Container(
                     padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: word
+                          .split("")
+                          .map((e) => hiddenLetter(
+                              e, selectedChar.contains(e.toUpperCase())))
+                          .toList(),
+                    ),
                   ))
                 ],
               )),
