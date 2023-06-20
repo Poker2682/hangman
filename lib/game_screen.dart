@@ -14,7 +14,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   var characters = "abcdefghijklmnñopqrstuvwxyz".toUpperCase();
   List<String> selectedChar = [];
-  List<String> wordList = ["palabra", "caja", "papel", "sapo"];
+  List<String> wordList = ["PALABRA", "CAJA", "PAPEL", "SAPO"];
   String currentWord = "";
 
   var tries = 0;
@@ -40,6 +40,50 @@ class _GameScreenState extends State<GameScreen> {
             });
           });
     }
+
+    if (wordIsComplete()) {
+      var currentWordIndex = wordList.indexOf(currentWord);
+      var remainingWords = wordList.length - currentWordIndex - 1;
+
+      if (remainingWords != 0) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Alert("Conseguiste la palabra",
+                  "Te quedan $remainingWords palabras por encontrar", () {
+                Navigator.of(context).pop();
+              });
+            });
+
+        setState(() {
+          selectedChar.clear();
+          currentWord = wordList[currentWordIndex + 1];
+        });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Alert(
+                  "¡Felicidades!", "Has completado el juego, aqui va tu premio",
+                  () {
+                Navigator.of(context).pop();
+              });
+            });
+        setState(() {
+          selectedChar.clear();
+          currentWord = wordList.first;
+        });
+      }
+    }
+  }
+
+  bool wordIsComplete() {
+    for (var char in currentWord.split("")) {
+      if (!selectedChar.contains(char)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @override
