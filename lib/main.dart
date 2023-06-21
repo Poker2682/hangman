@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hangman/game_screen.dart';
-import 'package:hangman/letter_screen.dart';
+import 'package:hangman/letter/letter_screen.dart';
 
 void main() {
   runApp(const MyApp());

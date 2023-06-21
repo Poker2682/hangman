@@ -3,7 +3,7 @@ import 'package:hangman/alert.dart';
 import 'package:hangman/consts/consts.dart';
 import 'package:hangman/game/figure_widget.dart';
 import 'package:hangman/game/hidden_letter.dart';
-import 'package:hangman/letter_screen.dart';
+import 'package:hangman/letter/letter_screen.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -93,7 +93,7 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
     currentWord = wordList.first.toUpperCase();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
