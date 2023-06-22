@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hangman/app_scroll_behaviour.dart';
-import 'package:hangman/letter/letter_screen.dart';
+import 'package:hangman/game_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         scrollBehavior: AppScrollBehavior(),
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
-        home: const LetterScreen());
+        // theme: ThemeData.light(),
+        home: const GameScreen());
   }
 }

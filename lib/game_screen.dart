@@ -14,8 +14,14 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   var characters = "abcdefghijklmnñopqrstuvwxyz".toUpperCase();
+  static const List<String> wordList = [
+    "MUELLE",
+    "NEGRA",
+    "VIAJAR",
+    "ENERO",
+    "FELIZ"
+  ];
   List<String> selectedChar = [];
-  List<String> wordList = ["PALABRA", "CAJA", "PAPEL", "SAPO"];
   String currentWord = "";
 
   var tries = 0;
@@ -65,9 +71,8 @@ class _GameScreenState extends State<GameScreen> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return Alert(
-                  "¡Felicidades!", "Has completado el juego, aqui va tu premio",
-                  () {
+              return Alert("¡Felicidades!",
+                  "Has completado el juego, ahora tu premio :)", () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: ((context) => const LetterScreen())));
               });
@@ -99,7 +104,7 @@ class _GameScreenState extends State<GameScreen> {
           builder: (BuildContext context) {
             return Alert(
                 "Hola mi amor :)",
-                "Necesitaba estudiar para la tesis, y tambien queria hacerte una "
+                "Necesitaba estudiar para la tesis, y queria hacerte una "
                     "carta que te sorprendiera al mismo tiempo, asi que programe este "
                     "jueguito del ahorcado que deberas resolver para descubrir tu carta.\n\n"
                     "Te amo! \u2665", () {
@@ -114,10 +119,11 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("El ahorcado"),
+        title: const Text("El ahorcado (Para mi nena)"),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),
+      backgroundColor: Colors.red,
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 400),
